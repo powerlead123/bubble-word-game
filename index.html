@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童背单词</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🌟 儿童背单词 🌟</h1>
+        </header>
+
+        <main id="main-content">
+            <!-- 主页面 -->
+            <div id="home-page" class="page active">
+                <div class="menu">
+                    <button class="menu-btn" onclick="showPage('wordbook-list')">📚 选择单词本</button>
+                    <button class="menu-btn bubble-btn" onclick="showPage('bubble-wordbook-list')">🎮 泡泡大战</button>
+                    <button class="menu-btn" onclick="showPage('create-wordbook')">➕ 创建单词本</button>
+                </div>
+            </div>
+
+            <!-- 单词本列表页面 -->
+            <div id="wordbook-list" class="page">
+                <h2>选择单词本</h2>
+                <div id="wordbook-container"></div>
+                <button class="back-btn" onclick="showPage('home-page')">返回</button>
+            </div>
+
+            <!-- 创建单词本页面 -->
+            <div id="create-wordbook" class="page">
+                <h2>创建单词本</h2>
+                <div class="form-group">
+                    <label>单词本名称：</label>
+                    <input type="text" id="wordbook-name" placeholder="请输入单词本名称">
+                </div>
+                <div class="word-input-section">
+                    <h3>添加单词</h3>
+                    <div class="word-form">
+                        <input type="text" id="english-word" placeholder="英文单词">
+                        <input type="text" id="chinese-input" placeholder="中文意思">
+                        <button onclick="addWord()">添加</button>
+                    </div>
+                </div>
+                <div id="word-list"></div>
+                <div class="action-buttons">
+                    <button onclick="saveWordbook()">保存单词本</button>
+                    <button class="back-btn" onclick="showPage('home-page')">返回</button>
+                </div>
+            </div>
+
+            <!-- 背单词游戏页面 -->
+            <div id="game-page" class="page">
+                <div class="game-header">
+                    <h2 id="game-title"></h2>
+                    <div class="progress">
+                        <span id="current-word">1</span> / <span id="total-words">10</span>
+                    </div>
+                </div>
+                <div class="game-content">
+                    <div class="meaning-section">
+                        <div class="meaning-title">中文意思：</div>
+                        <div class="meaning-box" id="meaning-display">加载中...</div>
+                    </div>
+                    <div class="word-puzzle" id="word-puzzle"></div>
+                    <div class="letter-options" id="letter-options"></div>
+                    <button id="submit-answer" onclick="submitAnswer()">提交答案</button>
+                </div>
+                <button class="back-btn" onclick="showPage('wordbook-list')">返回</button>
+            </div>
+
+            <!-- 结果页面 -->
+            <div id="result-page" class="page">
+                <h2>测试结果</h2>
+                <div id="result-content"></div>
+                <div class="action-buttons">
+                    <button onclick="showPage('wordbook-list')">重新选择</button>
+                    <button onclick="showPage('home-page')">返回首页</button>
+                </div>
+            </div>
+
+            <!-- 泡泡大战单词本选择页面 -->
+            <div id="bubble-wordbook-list" class="page">
+                <h2>🎮 泡泡大战 - 选择单词本</h2>
+                <div class="total-score-display">
+                    <span>总积分: <strong id="total-score-display">0</strong></span>
+                    <button class="arsenal-btn" onclick="showPage('arsenal')">🔫 兵器库</button>
+                </div>
+                <div id="bubble-wordbook-container"></div>
+                <button class="back-btn" onclick="showPage('home-page')">返回</button>
+            </div>
+
+            <!-- 兵器库页面 -->
+            <div id="arsenal" class="page">
+                <h2>🔫 兵器库</h2>
+                <div class="arsenal-info">
+                    <p>总积分: <strong id="arsenal-total-score">0</strong></p>
+                    <p>每击破1个泡泡获得100积分</p>
+                </div>
+                <div id="arsenal-container"></div>
+                <button class="back-btn" onclick="showPage('bubble-wordbook-list')">返回</button>
+            </div>
+
+            <!-- 泡泡大战游戏页面 -->
+            <div id="bubble-game" class="page">
+                <div class="bubble-game-header">
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">得分</span>
+                            <span class="stat-value" id="bubble-score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">连击</span>
+                            <span class="stat-value combo" id="bubble-combo">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">剩余泡泡</span>
+                            <span class="stat-value" id="bubble-remaining">10</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">总积分</span>
+                            <span class="stat-value" id="game-total-score">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 游戏内武器选择器 -->
+                <div class="weapon-selector">
+                    <div class="weapon-selector-title">
+                        <span>🔫 选择武器</span>
+                        <button class="toggle-selector" onclick="toggleWeaponSelector()">▼</button>
+                    </div>
+                    <div class="weapon-selector-content" id="weapon-selector-content">
+                        <!-- 武器按钮将在这里动态生成 -->
+                    </div>
+                </div>
+
+                <canvas id="bubble-canvas"></canvas>
+
+                <div class="bullet-section">
+                    <div class="bullet-info">
+                        <div class="chinese-hint" id="bubble-chinese">加载中...</div>
+
+                        <div class="word-display-area">
+                            <div class="word-slots" id="word-slots"></div>
+                            <button class="clear-btn" onclick="clearWord()">清空</button>
+                        </div>
+
+                        <div class="letter-keyboard" id="letter-keyboard"></div>
+
+                        <div class="combo-bonus-info">
+                            <span class="bonus-label">连击奖励:</span>
+                            <span class="bonus-value">每连击 +50 积分</span>
+                        </div>
+
+                        <div class="cannon-area">
+                            <div class="cannon-display">
+                                <div class="cannon-base">
+                                    <div class="cannon-barrel" id="cannon-barrel">
+                                        <div class="cannon-tip"></div>
+                                    </div>
+                                </div>
+                                <div class="bullet-mode" id="bullet-mode">
+                                    <span class="mode-label">当前子弹:</span>
+                                    <span class="mode-type" id="mode-type">普通</span>
+                                    <span class="mode-ability" id="mode-ability">基础射击</span>
+                                </div>
+                            </div>
+                            <button id="fire-btn" onclick="fireBullet()" disabled>🚀 发射</button>
+                        </div>
+
+                        <div class="bullet-status" id="bullet-status">点击字母拼写单词...</div>
+                    </div>
+                </div>
+
+                <button class="back-btn" onclick="exitBubbleGame()">退出游戏</button>
+            </div>
+
+            <!-- 泡泡大战结果页面 -->
+            <div id="bubble-result" class="page">
+                <h2>🎉 游戏结束</h2>
+                <div id="bubble-result-content"></div>
+                <div class="action-buttons">
+                    <button onclick="restartBubbleGame()">再玩一次</button>
+                    <button onclick="showPage('home-page')">返回首页</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

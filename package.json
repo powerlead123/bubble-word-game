@@ -1,0 +1,27 @@
+{
+  "name": "kids-vocabulary",
+  "version": "1.0.0",
+  "description": "一个专为儿童设计的互动式英语单词学习网站",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "deploy": "echo 'Deploy to Cloudflare Pages'"
+  },
+  "keywords": [
+    "kids",
+    "vocabulary",
+    "english",
+    "learning",
+    "education",
+    "children",
+    "game"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/kids-vocabulary.git"
+  },
+  "homepage": "https://your-site.pages.dev"
+}

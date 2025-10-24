@@ -1,0 +1,1889 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: white;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.page {
+    display: none;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.page.active {
+    display: block;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.menu-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ffa500);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.2em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    min-width: 250px;
+}
+
+.menu-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input[type="text"]:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+.word-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.word-form input {
+    flex: 1;
+}
+
+.word-form button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#word-list {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    min-height: 100px;
+}
+
+.word-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.word-item:last-child {
+    border-bottom: none;
+}
+
+.delete-btn {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.wordbook-item {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wordbook-item:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.wordbook-content {
+    flex: 1;
+    cursor: pointer;
+}
+
+.wordbook-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+.edit-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.edit-btn:hover {
+    background: #218838;
+}
+
+.delete-wordbook-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.delete-wordbook-btn:hover {
+    background: #c82333;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.difficulty-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s;
+    flex: 1;
+    max-width: 120px;
+}
+
+.difficulty-btn.easy {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.difficulty-btn.easy:hover {
+    background: linear-gradient(45deg, #45a049, #3d8b40);
+    transform: translateY(-2px);
+}
+
+.difficulty-btn.hard {
+    background: linear-gradient(45deg, #ff6b6b, #ff5252);
+    color: white;
+}
+
+.difficulty-btn.hard:hover {
+    background: linear-gradient(45deg, #ff5252, #e53935);
+    transform: translateY(-2px);
+}
+
+.wordbook-item h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.wordbook-item p {
+    color: #666;
+    font-size: 14px;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.progress {
+    background: #667eea;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.meaning-section {
+    margin-bottom: 30px;
+}
+
+.meaning-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.meaning-box {
+    background: #ff6b6b;
+    color: #ffffff;
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 5px solid #333;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.word-puzzle {
+    text-align: center;
+    font-size: 3em;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 30px;
+    letter-spacing: 10px;
+}
+
+.letter-slot {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: 3px solid #ddd;
+    border-radius: 8px;
+    margin: 0 5px;
+    line-height: 54px;
+    text-align: center;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.letter-slot.filled {
+    background: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.letter-slot.correct {
+    background: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.letter-slot.incorrect {
+    background: #ff4757;
+    border-color: #ff4757;
+}
+
+.letter-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 30px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+}
+
+.letter-option {
+    width: 45px;
+    height: 45px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.3em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.letter-option:hover {
+    background: #5a67d8;
+    transform: scale(1.1);
+}
+
+
+
+.letter-slot.selected {
+    border-color: #667eea !important;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+
+.back-btn {
+    background: #6c757d;
+    margin-top: 20px;
+}
+
+.back-btn:hover {
+    background: #5a6268;
+}
+
+#submit-answer {
+    background: #28a745;
+    font-size: 1.2em;
+    padding: 15px 30px;
+}
+
+#submit-answer:hover {
+    background: #218838;
+}
+
+#next-word {
+    background: #17a2b8;
+}
+
+#next-word:hover {
+    background: #138496;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.result-item.correct {
+    border-left: 5px solid #28a745;
+}
+
+.result-item.incorrect {
+    border-left: 5px solid #dc3545;
+}
+
+.score {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 15px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .word-form {
+        flex-direction: column;
+    }
+    
+    .meaning-title {
+        font-size: 1.1em;
+    }
+    
+    .meaning-box {
+        font-size: 2.2em;
+        padding: 20px;
+        min-height: 80px;
+    }
+    
+    .word-puzzle {
+        font-size: 2em;
+        letter-spacing: 5px;
+    }
+    
+    .letter-slot {
+        width: 45px;
+        height: 45px;
+        line-height: 39px;
+        margin: 0 2px;
+    }
+    
+    .wordbook-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .wordbook-actions {
+        margin-left: 0;
+        margin-top: 15px;
+        justify-content: center;
+    }
+    
+    .difficulty-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .difficulty-btn {
+        max-width: none;
+    }
+    
+    .letter-option {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+    }
+    
+    .word-display-area {
+        flex-direction: column;
+    }
+    
+    .word-slots {
+        width: 100%;
+    }
+    
+    .letter-slot-bubble {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3em;
+    }
+    
+    .keyboard-letter {
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+    }
+    
+    .cannon-area {
+        flex-direction: column;
+    }
+    
+    .cannon-display {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    #fire-btn {
+        width: 100%;
+    }
+}
+
+
+/* 泡泡大战样式 */
+.bubble-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2) !important;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.bubble-game-header {
+    margin-bottom: 20px;
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 15px;
+    border-radius: 15px;
+    color: white;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.stat-value.combo {
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+#bubble-canvas {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+    border-radius: 15px;
+    border: 3px solid #667eea;
+    display: block;
+    margin: 0 auto 20px;
+    cursor: crosshair;
+    touch-action: none;
+    user-select: none;
+}
+
+#bubble-canvas:hover {
+    border-color: #764ba2;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+}
+
+.bullet-section {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.chinese-hint {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #ff6b6b;
+    background: #fff3cd;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 3px solid #ffc107;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.word-display-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.word-slots {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    min-height: 60px;
+    padding: 10px;
+    background: white;
+    border: 3px solid #667eea;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.letter-slot-bubble {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.letter-slot-bubble:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.letter-slot-bubble.empty {
+    background: #e0e0e0;
+    color: #999;
+    cursor: default;
+}
+
+.letter-slot-bubble.empty:hover {
+    transform: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.clear-btn {
+    padding: 10px 20px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.clear-btn:hover {
+    background: #ff5252;
+    transform: scale(1.05);
+}
+
+.letter-keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.keyboard-letter {
+    width: 45px;
+    height: 45px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.keyboard-letter:hover {
+    background: #5a67d8;
+    transform: scale(1.1);
+}
+
+.keyboard-letter:active {
+    transform: scale(0.95);
+}
+
+.combo-bonus-info {
+    background: linear-gradient(135deg, #ffd700, #ff6b6b);
+    color: white;
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.bonus-label {
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+.bonus-value {
+    font-size: 1.1em;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.upgrade-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.upgrade-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.upgrade-combo {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.1em;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 25px;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700, #ff6b6b);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    width: 0%;
+    position: relative;
+}
+
+.progress-fill.super {
+    background: linear-gradient(90deg, #00ff00, #00cc00);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.progress-fill.mega {
+    background: linear-gradient(90deg, #ff00ff, #cc00cc);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+}
+
+.upgrade-levels {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.level-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.5;
+    transition: all 0.3s;
+}
+
+.level-marker.active {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.level-icon {
+    font-size: 1.5em;
+}
+
+.level-name {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #666;
+}
+
+.level-marker.active .level-name {
+    color: #667eea;
+}
+
+.cannon-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.cannon-display {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border-radius: 10px;
+}
+
+.cannon-base {
+    width: 80px;
+    height: 60px;
+    background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.cannon-barrel {
+    width: 60px;
+    height: 20px;
+    background: linear-gradient(90deg, #34495e, #2c3e50);
+    border-radius: 10px;
+    position: relative;
+    transform-origin: left center;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.cannon-barrel.normal {
+    background: linear-gradient(90deg, #ffd700, #ff6b6b);
+}
+
+.cannon-barrel.super {
+    background: linear-gradient(90deg, #00ff00, #00cc00);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+}
+
+.cannon-barrel.mega {
+    background: linear-gradient(90deg, #ff00ff, #cc00cc);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+}
+
+.cannon-tip {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.bullet-mode {
+    flex: 1;
+    text-align: center;
+    color: white;
+}
+
+.mode-label {
+    display: block;
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.mode-type {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.mode-type.normal {
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+.mode-type.super {
+    color: #00ff00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+.mode-type.mega {
+    color: #ff00ff;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+}
+
+.mode-ability {
+    display: block;
+    font-size: 0.7em;
+    opacity: 0.9;
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#fire-btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background: linear-gradient(45deg, #ff6b6b, #ff5252);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+#fire-btn:hover:not(:disabled) {
+    background: linear-gradient(45deg, #ff5252, #e53935);
+    transform: scale(1.05);
+}
+
+#fire-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.bullet-status {
+    text-align: center;
+    font-size: 1.1em;
+    color: #666;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.bullet-status.correct {
+    background: #d4edda;
+    color: #155724;
+    font-weight: bold;
+}
+
+.bullet-status.wrong {
+    background: #f8d7da;
+    color: #721c24;
+    font-weight: bold;
+}
+
+/* 泡泡样式 */
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* 子弹样式 */
+.bullet {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, #ffd700, #ff6b6b);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+.bullet.super {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #00ff00, #00cc00);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+}
+
+.bullet.mega {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, #ff00ff, #cc00cc);
+    box-shadow: 0 0 40px rgba(255, 0, 255, 0.8);
+}
+
+/* 连击提示 */
+.combo-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    animation: comboAnim 1s ease-out;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes comboAnim {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* 升级提示 */
+.upgrade-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 30px 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: upgradeAnim 2s ease-out;
+    pointer-events: none;
+    z-index: 1001;
+    text-align: center;
+}
+
+.upgrade-icon {
+    font-size: 4em;
+    margin-bottom: 10px;
+    animation: rotateIcon 0.5s ease-out;
+}
+
+.upgrade-text {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    margin-bottom: 5px;
+}
+
+.upgrade-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+}
+
+@keyframes upgradeAnim {
+    0% { 
+        transform: translate(-50%, -50%) scale(0) rotate(-180deg); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2) rotate(10deg); 
+        opacity: 1; 
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(1) rotate(-5deg);
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1) rotate(0deg); 
+        opacity: 0; 
+    }
+}
+
+@keyframes rotateIcon {
+    0% { transform: rotate(0deg) scale(0); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* 武器解锁提示 */
+.weapon-unlock-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #ffd700, #ff6b6b);
+    padding: 30px 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: unlockAnim 3s ease-out;
+    pointer-events: none;
+    z-index: 1002;
+    text-align: center;
+    border: 3px solid #fff;
+}
+
+.unlock-icon {
+    font-size: 4em;
+    margin-bottom: 10px;
+    animation: bounceIcon 0.6s ease-out;
+}
+
+.unlock-text {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 5px;
+}
+
+.unlock-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.unlock-desc {
+    font-size: 1em;
+    color: rgba(255,255,255,0.9);
+}
+
+@keyframes unlockAnim {
+    0% { 
+        transform: translate(-50%, -50%) scale(0) rotate(-180deg); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.1) rotate(10deg); 
+        opacity: 1; 
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(0.8); 
+        opacity: 0; 
+    }
+}
+
+@keyframes bounceIcon {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-20px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-10px); }
+}
+
+/* 武器切换通知 */
+.weapon-change-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1003;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+}
+
+.weapon-change-notification.show {
+    transform: translateX(0);
+}
+
+.notification-icon {
+    font-size: 2em;
+}
+
+.notification-text {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    #bubble-canvas {
+        height: 300px;
+    }
+    
+    .game-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stat-value {
+        font-size: 1.5em;
+    }
+    
+    .chinese-hint {
+        font-size: 1.5em;
+    }
+    
+    .bullet-input-area {
+        flex-direction: column;
+    }
+    
+    #fire-btn {
+        width: 100%;
+    }
+    
+    .upgrade-progress {
+        padding: 10px;
+    }
+    
+    .upgrade-levels {
+        gap: 5px;
+    }
+    
+    .level-icon {
+        font-size: 1.2em;
+    }
+    
+    .level-name {
+        font-size: 0.7em;
+    }
+    
+    .upgrade-popup {
+        padding: 20px 30px;
+    }
+    
+    .upgrade-icon {
+        font-size: 3em;
+    }
+    
+    .upgrade-text {
+        font-size: 1.5em;
+    }
+    
+    .upgrade-name {
+        font-size: 1.2em;
+    }
+    
+    .weapon-selector-content {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    }
+    
+    .weapon-btn-icon {
+        font-size: 1.5em;
+    }
+    
+    .weapon-btn-name {
+        font-size: 0.7em;
+    }
+    
+    .weapon-change-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        padding: 12px 15px;
+    }
+    
+    .notification-icon {
+        font-size: 1.5em;
+    }
+    
+    .notification-text {
+        font-size: 0.9em;
+    }
+}
+
+
+/* 游戏内武器选择器 */
+.weapon-selector {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.weapon-selector-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.toggle-selector {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.toggle-selector:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.weapon-selector-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    padding: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.weapon-selector-content.open {
+    max-height: 500px;
+}
+
+.weapon-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.weapon-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.weapon-btn.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+}
+
+.weapon-btn.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.weapon-btn.locked:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.weapon-btn-icon {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.weapon-btn-name {
+    font-size: 0.75em;
+    color: #333;
+    font-weight: bold;
+}
+
+.weapon-btn-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+.weapon-btn.locked .weapon-btn-badge {
+    background: #999;
+}
+
+/* 总积分显示 */
+.total-score-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd700, #ff6b6b);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.arsenal-btn {
+    background: white;
+    color: #667eea;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.arsenal-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* 兵器库 */
+.arsenal-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.arsenal-info p {
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+#arsenal-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.weapon-card {
+    background: white;
+    border: 3px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.weapon-card.unlocked {
+    border-color: #4CAF50;
+    cursor: pointer;
+}
+
+.weapon-card.unlocked:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.weapon-card.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+}
+
+.weapon-card.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.weapon-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.weapon-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.weapon-desc {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.weapon-score {
+    font-size: 0.9em;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.weapon-card.locked .weapon-score {
+    color: #999;
+}
+
+.weapon-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.weapon-status.unlocked {
+    background: #4CAF50;
+    color: white;
+}
+
+.weapon-status.locked {
+    background: #999;
+    color: white;
+}
+
+.weapon-status.selected {
+    background: #667eea;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    #arsenal-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .total-score-display {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .arsenal-btn {
+        width: 100%;
+    }
+}
+
+
+/* BOSS出现提示 */
+.boss-appear-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    padding: 40px 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    animation: bossAppearAnim 3s ease-out;
+    pointer-events: none;
+    z-index: 1004;
+    text-align: center;
+    border: 4px solid #ffd700;
+}
+
+.boss-appear-icon {
+    font-size: 5em;
+    margin-bottom: 15px;
+    animation: bossShake 0.5s ease-in-out infinite;
+}
+
+.boss-appear-text {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    margin-bottom: 10px;
+}
+
+.boss-appear-hp {
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+}
+
+@keyframes bossAppearAnim {
+    0% { 
+        transform: translate(-50%, -50%) scale(0) rotate(-360deg); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2) rotate(10deg); 
+        opacity: 1; 
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(0.8); 
+        opacity: 0; 
+    }
+}
+
+@keyframes bossShake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+}
+
+/* BOSS击败提示 */
+.boss-defeat-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #ffd700, #ff6b6b);
+    padding: 40px 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    animation: bossDefeatAnim 3s ease-out;
+    pointer-events: none;
+    z-index: 1004;
+    text-align: center;
+    border: 4px solid #fff;
+}
+
+.boss-defeat-icon {
+    font-size: 5em;
+    margin-bottom: 15px;
+    animation: victoryRotate 1s ease-out;
+}
+
+.boss-defeat-text {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+}
+
+.boss-defeat-bonus {
+    font-size: 1.8em;
+    color: #fff;
+    font-weight: bold;
+}
+
+@keyframes bossDefeatAnim {
+    0% { 
+        transform: translate(-50%, -50%) scale(0); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2); 
+        opacity: 1; 
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(0.8); 
+        opacity: 0; 
+    }
+}
+
+@keyframes victoryRotate {
+    0% { transform: rotate(0deg) scale(0); }
+    50% { transform: rotate(360deg) scale(1.3); }
+    100% { transform: rotate(720deg) scale(1); }
+}
+
+/* 单词掌握提示 */
+.word-mastered-popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    padding: 30px 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: wordMasteredAnim 2s ease-out;
+    pointer-events: none;
+    z-index: 1003;
+    text-align: center;
+    border: 3px solid #fff;
+}
+
+.word-mastered-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.word-mastered-text {
+    font-size: 1.3em;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.word-mastered-word {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 5px;
+}
+
+.word-mastered-chinese {
+    font-size: 1.5em;
+    color: #fff;
+}
+
+@keyframes wordMasteredAnim {
+    0% { 
+        transform: translate(-50%, -50%) scale(0); 
+        opacity: 0; 
+    }
+    30% { 
+        transform: translate(-50%, -50%) scale(1.1); 
+        opacity: 1; 
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(0.9); 
+        opacity: 0; 
+    }
+}
+
+/* 单词本完成提示 */
+.wordbook-complete-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 50px 70px;
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+    z-index: 1005;
+    text-align: center;
+    border: 5px solid #ffd700;
+    max-width: 500px;
+}
+
+.wordbook-complete-icon {
+    font-size: 6em;
+    margin-bottom: 20px;
+    animation: victoryRotate 1.5s ease-out;
+}
+
+.wordbook-complete-title {
+    font-size: 3em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+}
+
+.wordbook-complete-text {
+    font-size: 1.5em;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.wordbook-complete-name {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+}
+
+.wordbook-complete-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 1em;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.wordbook-complete-message {
+    font-size: 1.3em;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.wordbook-complete-btn {
+    background: linear-gradient(45deg, #ffd700, #ffaa00);
+    color: #333;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.wordbook-complete-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.wordbook-complete-btn:active {
+    transform: translateY(-1px);
+}
+
+/* 终极弹使用提示 */
+.ultimate-used-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #FF1493, #9B59B6, #4169E1);
+    padding: 50px 70px;
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+    animation: ultimateAnim 3s ease-out;
+    pointer-events: none;
+    z-index: 1006;
+    text-align: center;
+    border: 5px solid #FFD700;
+}
+
+.ultimate-icon {
+    font-size: 6em;
+    margin-bottom: 20px;
+    animation: ultimateRotate 2s ease-out;
+}
+
+.ultimate-text {
+    font-size: 3em;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    margin-bottom: 30px;
+}
+
+.ultimate-stats {
+    font-size: 1.5em;
+    color: #fff;
+    line-height: 2;
+}
+
+.ultimate-stats div {
+    margin: 10px 0;
+}
+
+@keyframes ultimateAnim {
+    0% { 
+        transform: translate(-50%, -50%) scale(0) rotate(-720deg); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.3) rotate(0deg); 
+        opacity: 1; 
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(0.9); 
+        opacity: 0; 
+    }
+}
+
+@keyframes ultimateRotate {
+    0% { transform: rotate(0deg) scale(0); }
+    50% { transform: rotate(720deg) scale(1.5); }
+    100% { transform: rotate(1440deg) scale(1); }
+}
