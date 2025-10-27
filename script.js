@@ -3301,17 +3301,17 @@ function gameLoop() {
         if (bullet.type === 'spiral') {
             if (!bullet.spiralTime) {
                 bullet.spiralTime = 0;
-                bullet.spiralRadius = 0;
+                bullet.spiralRadius = 5; // 初始半径
                 bullet.spiralAngle = 0;
                 bullet.centerX = bullet.x;
                 bullet.centerY = bullet.y;
-                bullet.baseVx = bullet.vx;
-                bullet.baseVy = bullet.vy;
+                bullet.baseVx = bullet.vx * 0.5; // 减慢前进速度，让螺旋更明显
+                bullet.baseVy = bullet.vy * 0.5;
             }
             
             bullet.spiralTime += 0.1;
-            bullet.spiralAngle += 0.15; // 旋转速度
-            bullet.spiralRadius += 0.8; // 半径逐渐增大（渐开线效果）
+            bullet.spiralAngle += 0.4; // 大幅增加旋转速度，让圆形更明显
+            bullet.spiralRadius += 1.5; // 增加半径增长速度
             
             // 计算螺旋中心点的移动
             bullet.centerX += bullet.baseVx;
