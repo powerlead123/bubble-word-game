@@ -3297,18 +3297,37 @@ function gameLoop() {
         const maxTrailLength = bullet.type === 'spiral' ? 15 : 8;
         if (bullet.trail.length > maxTrailLength) bullet.trail.shift();
         
-        // 螺旋弹特殊效果：左右摆动
+        // 螺旋弹特殊效果：渐开线螺旋运动
         if (bullet.type === 'spiral') {
-            if (!bullet.spiralTime) bullet.spiralTime = 0;
-            bullet.spiralTime += 0.2;
+            if (!bullet.spiralTime) {
+                bullet.spiralTime = 0;
+                bullet.spiralRadius = 0;
+                bullet.spiralAngle = 0;
+                bullet.centerX = bullet.x;
+                bullet.centerY = bullet.y;
+                bullet.baseVx = bullet.vx;
+                bullet.baseVy = bullet.vy;
+            }
             
-            // 计算垂直于飞行方向的摆动
-            const angle = Math.atan2(bullet.vy, bullet.vx);
-            const perpAngle = angle + Math.PI / 2;
-            const swingAmount = Math.sin(bullet.spiralTime) * 3; // 摆动幅度
+            bullet.spiralTime += 0.1;
+            bullet.spiralAngle += 0.15; // 旋转速度
+            bullet.spiralRadius += 0.8; // 半径逐渐增大（渐开线效果）
             
-            bullet.x += Math.cos(perpAngle) * swingAmount;
-            bullet.y += Math.sin(perpAngle) * swingAmount;
+            // 计算螺旋中心点的移动
+            bullet.centerX += bullet.baseVx;
+            bullet.centerY += bullet.baseVy;
+            
+            // 计算螺旋偏移
+            const offsetX = Math.cos(bullet.spiralAngle) * bullet.spiralRadius;
+            const offsetY = Math.sin(bullet.spiralAngle) * bullet.spiralRadius;
+            
+            // 更新子弹位置
+            bullet.x = bullet.centerX + offsetX;
+            bullet.y = bullet.centerY + offsetY;
+            
+            // 不使用默认的位置更新
+            bullet.vx = 0;
+            bullet.vy = 0;
         }
         
         // 追踪弹特殊效果：自动追踪
@@ -3717,11 +3736,11 @@ function gameLoop() {
                     }
                 });
                 
-                // 移除子弹（弹跳弹、超大子弹、穿透弹除外）
+                // 移除子弹（弹跳弹、超大子弹、穿透弹、螺旋弹除外）
                 // 穿透弹不消失，继续穿透
-                // 龙卷弹击中后消失（触发吸引动画）
-                if (bullet.isPierce) {
-                    // 穿透弹不移除，继续飞行
+                // 螺旋弹不消失，继续螺旋飞行
+                if (bullet.isPierce || bullet.type === 'spiral') {
+                    // 穿透弹和螺旋弹不移除，继续飞行
                 } else if (bullet.type !== 'bounce' && bullet.type !== 'mega' && bullet.type !== 'homing') {
                     bubbleGame.bullets.splice(i, 1);
                 } else if (bullet.type === 'homing') {
