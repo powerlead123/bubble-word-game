@@ -12,7 +12,14 @@ function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
     });
-    document.getElementById(pageId).classList.add('active');
+    
+    const targetPage = document.getElementById(pageId);
+    if (!targetPage) {
+        console.error(`页面不存在: ${pageId}`);
+        return;
+    }
+    
+    targetPage.classList.add('active');
     
     if (pageId === 'wordbook-list') {
         loadWordbookList();
@@ -3079,7 +3086,7 @@ function backToWordbookSelection() {
     }
     
     // 返回单词本选择页面
-    showPage('bubble-wordbook-selection');
+    showPage('bubble-wordbook-list');
     loadBubbleWordbookList();
 }
 
