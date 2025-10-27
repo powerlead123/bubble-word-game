@@ -264,9 +264,14 @@ function loadCurrentWord() {
         }
         
         // 显示第一个字母提示
+        console.log('首字母提示元素:', firstLetterHintElement);
+        console.log('当前单词:', word.english);
         if (firstLetterHintElement && word.english) {
             const firstLetter = word.english.charAt(0).toUpperCase();
             firstLetterHintElement.textContent = `💡 提示：首字母是 ${firstLetter}`;
+            console.log('已设置首字母提示:', firstLetter);
+        } else {
+            console.error('无法设置首字母提示 - 元素:', firstLetterHintElement, '单词:', word.english);
         }
     }, 100);
     
