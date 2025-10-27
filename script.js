@@ -242,6 +242,7 @@ function loadCurrentWord() {
     // 等待DOM完全加载后再设置中文意思
     setTimeout(() => {
         const chineseMeaningElement = document.getElementById('meaning-display');
+        const firstLetterHintElement = document.getElementById('first-letter-hint');
         console.log('找到元素:', chineseMeaningElement);
         
         if (chineseMeaningElement) {
@@ -260,6 +261,12 @@ function loadCurrentWord() {
             console.log('最终显示内容:', chineseMeaningElement.textContent);
         } else {
             console.error('找不到中文意思元素！');
+        }
+        
+        // 显示第一个字母提示
+        if (firstLetterHintElement && word.english) {
+            const firstLetter = word.english.charAt(0).toUpperCase();
+            firstLetterHintElement.textContent = `💡 提示：首字母是 ${firstLetter}`;
         }
     }, 100);
     
@@ -2473,31 +2480,10 @@ function bossSummonBubbles(boss, canvas) {
     updateBubbleCount();
 }
 
-// 显示BOSS特征提示
+// 显示BOSS特征提示（已禁用，避免干扰游戏）
 function showBossTraitPopup(message) {
-    const popup = document.createElement('div');
-    popup.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.9);
-        color: #ffd700;
-        padding: 20px 40px;
-        border-radius: 15px;
-        font-size: 24px;
-        font-weight: bold;
-        z-index: 10000;
-        animation: popupFade 2s ease-out;
-        border: 3px solid #ffd700;
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-    `;
-    popup.textContent = message;
-    document.body.appendChild(popup);
-    
-    setTimeout(() => {
-        popup.remove();
-    }, 2000);
+    // 不显示提示框，保持游戏流畅
+    // console.log('BOSS技能:', message); // 可以在控制台查看
 }
 
 // 更新泡泡老大
