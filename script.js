@@ -944,13 +944,6 @@ function loadNextWord() {
     const stars = '⭐'.repeat(ammo);
     document.getElementById('bubble-chinese').textContent = `${word.chinese} ${stars} (${ammo}/5)`;
     
-    // 显示首字母提示
-    const firstLetterHintElement = document.getElementById('bubble-first-letter-hint');
-    if (firstLetterHintElement && word.english) {
-        const firstLetter = word.english.charAt(0).toUpperCase();
-        firstLetterHintElement.textContent = `💡 提示：首字母是 ${firstLetter}`;
-    }
-    
     // 清空输入
     currentInput = [];
     updateWordDisplay();
@@ -1024,9 +1017,14 @@ function updateWordDisplay() {
         const slot = document.createElement('div');
         slot.className = 'letter-slot-bubble';
         
-        if (i < currentInput.length) {
-            slot.textContent = currentInput[i];
-            slot.onclick = () => removeLetter(i);
+        // 第一个字母直接显示（提示）
+        if (i === 0) {
+            slot.textContent = currentWord.english[0].toUpperCase();
+            slot.classList.add('hint-letter'); // 添加特殊样式
+        } else if (i - 1 < currentInput.length) {
+            // 从第二个字母开始才需要用户输入
+            slot.textContent = currentInput[i - 1];
+            slot.onclick = () => removeLetter(i - 1);
         } else {
             slot.classList.add('empty');
             slot.textContent = '_';
@@ -1053,7 +1051,8 @@ function clearWord() {
 // 检查单词是否正确
 function checkWord() {
     const currentWord = bubbleGame.words[bubbleGame.currentWordIndex];
-    const userInput = currentInput.join('');
+    // 第一个字母已经给出，只需要检查剩余部分
+    const userInput = currentWord.english[0] + currentInput.join('');
     
     if (userInput === currentWord.english) {
         document.getElementById('fire-btn').disabled = false;
@@ -1062,11 +1061,11 @@ function checkWord() {
     } else {
         document.getElementById('fire-btn').disabled = true;
         
-        if (userInput.length === 0) {
+        if (currentInput.length === 0) {
             document.getElementById('bullet-status').textContent = '点击字母拼写单词...';
             document.getElementById('bullet-status').className = 'bullet-status';
-        } else if (userInput.length === currentWord.english.length) {
-            // 拼写完成但错误
+        } else if (currentInput.length === currentWord.english.length - 1) {
+            // 拼写完成但错误（减1因为第一个字母已给出）
             document.getElementById('bullet-status').textContent = '❌ 拼写错误！请重新拼写';
             document.getElementById('bullet-status').className = 'bullet-status wrong';
         } else {

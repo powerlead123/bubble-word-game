@@ -690,6 +690,17 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.letter-slot-bubble.hint-letter {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    cursor: default;
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.letter-slot-bubble.hint-letter:hover {
+    transform: none;
+}
+
 .clear-btn {
     padding: 10px 20px;
     background: #ff6b6b;
