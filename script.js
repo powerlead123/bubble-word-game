@@ -2424,7 +2424,7 @@ function spawnBoss() {
 
 // BOSS特征：闪电攻击
 function bossLightningAttack(boss, canvas) {
-    showBossTraitPopup('BOSS使用了闪电攻击！⚡');
+    // showBossTraitPopup('BOSS使用了闪电攻击！⚡'); // 已禁用提示
     
     // 创建闪电从BOSS到炮台
     const cannonX = canvas.width / 2;
@@ -2441,7 +2441,7 @@ function bossLightningAttack(boss, canvas) {
 
 // BOSS特征：召唤泡泡
 function bossSummonBubbles(boss, canvas) {
-    showBossTraitPopup('BOSS召唤了泡泡！🎯');
+    // showBossTraitPopup('BOSS召唤了泡泡！🎯'); // 已禁用提示
     
     // 在BOSS周围召唤3个泡泡
     for (let i = 0; i < 3; i++) {
@@ -2520,7 +2520,7 @@ function updateBoss(ctx, canvas) {
         // 狂暴模式特征（HP < 30%）
         if (boss.traits.includes('rage') && !boss.isRage && boss.hp < boss.maxHp * 0.3) {
             boss.isRage = true;
-            showBossTraitPopup('BOSS进入狂暴模式！💪');
+            // showBossTraitPopup('BOSS进入狂暴模式！💪'); // 已禁用提示
         }
     }
     
@@ -3437,7 +3437,7 @@ function gameLoop() {
                 if (bullet.isFreeze) {
                     if (boss.traits && boss.traits.includes('freeze_immune')) {
                         // 冰冻免疫
-                        showBossTraitPopup('免疫！🧊');
+                        // showBossTraitPopup('免疫！🧊'); // 已禁用提示
                         bubbleGame.bullets.splice(i, 1);
                         continue;
                     }
@@ -3463,7 +3463,7 @@ function gameLoop() {
                         // 护盾破碎，剩余伤害打到HP
                         boss.hp += boss.shield; // shield是负数
                         boss.shield = 0;
-                        showBossTraitPopup('护盾破碎！🛡️');
+                        // showBossTraitPopup('护盾破碎！🛡️'); // 已禁用提示
                     }
                 } else {
                     // 没有护盾，直接扣血
