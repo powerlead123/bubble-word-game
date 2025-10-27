@@ -944,6 +944,13 @@ function loadNextWord() {
     const stars = '⭐'.repeat(ammo);
     document.getElementById('bubble-chinese').textContent = `${word.chinese} ${stars} (${ammo}/5)`;
     
+    // 显示首字母提示
+    const firstLetterHintElement = document.getElementById('bubble-first-letter-hint');
+    if (firstLetterHintElement && word.english) {
+        const firstLetter = word.english.charAt(0).toUpperCase();
+        firstLetterHintElement.textContent = `💡 提示：首字母是 ${firstLetter}`;
+    }
+    
     // 清空输入
     currentInput = [];
     updateWordDisplay();
