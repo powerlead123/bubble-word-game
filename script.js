@@ -274,7 +274,7 @@ function loadCurrentWord() {
         console.log('首字母提示元素:', firstLetterHintElement);
         console.log('当前单词:', word.english);
         if (firstLetterHintElement && word.english) {
-            const firstLetter = word.english.charAt(0).toUpperCase();
+            const firstLetter = word.english.charAt(0); // 保持原始大小写
             firstLetterHintElement.textContent = `💡 提示：首字母是 ${firstLetter}`;
             console.log('已设置首字母提示:', firstLetter);
         } else {
@@ -703,6 +703,7 @@ const weaponUnlocks = {
     pierce: { score: 7000, name: '穿透弹', icon: '🌟', description: '穿透所有泡泡', type: 'bullet' },
     freeze: { score: 7500, name: '冰冻弹', icon: '❄️', description: '冻结减速泡泡', type: 'bullet' },
     ultimate: { score: 8000, name: '终极弹', icon: '⚡💥', description: '清空全屏', type: 'bullet' },
+    electric: { score: 8500, name: '电网弹', icon: '⚡', description: '横排电网持续5秒', type: 'bullet' },
     starburst: { score: 9000, name: '星爆弹', icon: '⭐', description: '爆炸成8发子弹', type: 'bullet' },
     tornado: { score: 10000, name: '龙卷弹', icon: '🌪️', description: '吸引并摧毁', type: 'bullet' }
 };
@@ -1026,7 +1027,7 @@ function updateWordDisplay() {
         
         // 第一个字母直接显示（提示）
         if (i === 0) {
-            slot.textContent = currentWord.english[0].toUpperCase();
+            slot.textContent = currentWord.english[0]; // 保持原始大小写
             slot.classList.add('hint-letter'); // 添加特殊样式
         } else if (i - 1 < currentInput.length) {
             // 从第二个字母开始才需要用户输入
@@ -1601,8 +1602,45 @@ function drawBullet(ctx, bullet) {
         case 'ultimate':
             drawUltimateBullet(ctx, bullet);
             break;
+        case 'electric':
+            drawElectricNet(ctx, bullet);
+            break;
         default:
             drawNormalBullet(ctx, bullet);
+    }
+    
+    ctx.restore();
+}
+
+// 绘制电网
+function drawElectricNet(ctx, bullet) {
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // 重置变换，因为电网不需要旋转
+    
+    const halfWidth = bullet.netWidth / 2;
+    
+    // 绘制电网主体
+    ctx.strokeStyle = '#FFD700';
+    ctx.lineWidth = bullet.netHeight;
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = '#FFD700';
+    
+    // 横线
+    ctx.beginPath();
+    ctx.moveTo(bullet.x - halfWidth, bullet.y);
+    ctx.lineTo(bullet.x + halfWidth, bullet.y);
+    ctx.stroke();
+    
+    // 电弧效果
+    ctx.strokeStyle = '#00BFFF';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 10; i++) {
+        const x = bullet.x - halfWidth + (bullet.netWidth / 10) * i;
+        const offset = Math.sin(Date.now() * 0.01 + i) * 10;
+        ctx.beginPath();
+        ctx.moveTo(x, bullet.y - 10);
+        ctx.lineTo(x + offset, bullet.y + 10);
+        ctx.stroke();
     }
     
     ctx.restore();
@@ -2059,6 +2097,12 @@ function createBullet(cannonX, cannonY, weaponType) {
         return;
     }
     
+    // 电网弹特殊处理
+    if (weaponType === 'electric') {
+        createElectricNet(startX, startY);
+        return;
+    }
+    
     // 分裂双炮
     if (weaponType === 'split') {
         const angleOffset = 0.15;
@@ -2275,6 +2319,7 @@ function getBulletSize(weaponType) {
         case 'freeze': return 19; // 冰冻弹
         case 'starburst': return 25; // 星爆弹（大）
         case 'tornado': return 30; // 龙卷弹（大）
+        case 'electric': return 10; // 电网弹
         case 'ultimate': return 40; // 终极弹
         default: return 15;
     }
@@ -2297,6 +2342,7 @@ function getBulletColor(weaponType) {
         case 'freeze': return '#00BFFF'; // 深天蓝
         case 'starburst': return '#FFD700'; // 金黄色
         case 'tornado': return '#87CEEB'; // 天蓝色
+        case 'electric': return '#FFD700'; // 金黄色
         case 'ultimate': return '#FF1493'; // 深粉色（彩虹效果在绘制时处理）
         default: return '#ffd700';
     }
@@ -2311,21 +2357,21 @@ function getBulletType() {
 function startBubbleSpawning() {
     if (!bubbleGame.isGameRunning) return;
     
-    // 每1秒生成一个泡泡（提高频率）
+    // 每3秒生成一个泡泡（因为泡泡不会消失，所以减慢生成）
     const spawnInterval = setInterval(() => {
         if (!bubbleGame.isGameRunning) {
             clearInterval(spawnInterval);
             return;
         }
         
-        if (bubbleGame.bubbles.length < 15) { // 增加最大泡泡数量
+        if (bubbleGame.bubbles.length < 12) { // 限制最大泡泡数量，避免卡顿
             spawnBubble();
         }
-    }, 1000); // 从2000ms改为1000ms
+    }, 3000); // 3秒生成一个
     
-    // 初始生成5个泡泡（增加初始数量）
-    for (let i = 0; i < 5; i++) {
-        setTimeout(() => spawnBubble(), i * 300);
+    // 初始生成3个泡泡
+    for (let i = 0; i < 3; i++) {
+        setTimeout(() => spawnBubble(), i * 500);
     }
 }
 
@@ -2337,6 +2383,7 @@ function spawnBubble() {
     const bubble = {
         x: Math.random() * (canvas.width - 60) + 30,
         y: -30,
+        vx: (Math.random() - 0.5) * 2, // 添加水平速度
         vy: 1 + Math.random() * 2,
         size: 25 + Math.random() * 15,
         color: colors[Math.floor(Math.random() * colors.length)],
@@ -2939,6 +2986,28 @@ function createUltimateBullet(startX, startY, vx, vy) {
     });
 }
 
+// 创建电网弹
+function createElectricNet(startX, startY) {
+    const canvas = bubbleGame.canvas;
+    
+    // 创建横排电网
+    bubbleGame.bullets.push({
+        x: startX,
+        y: startY,
+        vx: 0,
+        vy: -3, // 向上移动
+        type: 'electric',
+        size: 10,
+        color: '#FFD700',
+        isElectric: true,
+        netWidth: canvas.width * 0.8, // 电网宽度为屏幕80%
+        netHeight: 5, // 电网厚度
+        createdTime: Date.now(),
+        duration: 5000, // 持续5秒
+        trail: []
+    });
+}
+
 // 触发终极弹效果
 function triggerUltimateEffect(x, y) {
     const canvas = bubbleGame.canvas;
@@ -3236,10 +3305,35 @@ function gameLoop() {
             bubble.vy = bubble.originalVy || bubble.vy;
         }
         
+        // 初始化水平速度（如果没有）
+        if (bubble.vx === undefined) {
+            bubble.vx = (Math.random() - 0.5) * 2; // 随机水平速度
+        }
+        
         // 更新位置
+        bubble.x += bubble.vx;
         bubble.y += bubble.vy;
         bubble.floatOffset += bubble.floatSpeed;
         const floatX = Math.sin(bubble.floatOffset) * 20;
+        
+        // 边界反弹
+        // 左右边界
+        if (bubble.x - bubble.size < 0) {
+            bubble.x = bubble.size;
+            bubble.vx = Math.abs(bubble.vx); // 向右反弹
+        } else if (bubble.x + bubble.size > canvas.width) {
+            bubble.x = canvas.width - bubble.size;
+            bubble.vx = -Math.abs(bubble.vx); // 向左反弹
+        }
+        
+        // 上下边界
+        if (bubble.y - bubble.size < 0) {
+            bubble.y = bubble.size;
+            bubble.vy = Math.abs(bubble.vy); // 向下反弹
+        } else if (bubble.y + bubble.size > canvas.height) {
+            bubble.y = canvas.height - bubble.size;
+            bubble.vy = -Math.abs(bubble.vy); // 向上反弹
+        }
         
         // 绘制泡泡
         ctx.save();
@@ -3285,11 +3379,7 @@ function gameLoop() {
         
         ctx.restore();
         
-        // 移除超出屏幕的泡泡
-        if (bubble.y > canvas.height + 50) {
-            bubbleGame.bubbles.splice(i, 1);
-            updateBubbleCount();
-        }
+        // 泡泡不再移除，会一直反弹直到被击破
     }
     
     // 更新和绘制子弹
@@ -3542,6 +3632,36 @@ function gameLoop() {
                 
                 continue;
             }
+        }
+        
+        // 电网弹特殊处理：检测所有泡泡是否碰到电网
+        if (bullet.isElectric) {
+            // 检查是否超时
+            if (Date.now() - bullet.createdTime > bullet.duration) {
+                bubbleGame.bullets.splice(i, 1);
+                continue;
+            }
+            
+            // 检测所有泡泡
+            for (let j = bubbleGame.bubbles.length - 1; j >= 0; j--) {
+                const bubble = bubbleGame.bubbles[j];
+                const halfWidth = bullet.netWidth / 2;
+                
+                // 检测泡泡是否在电网范围内
+                if (bubble.x >= bullet.x - halfWidth && 
+                    bubble.x <= bullet.x + halfWidth &&
+                    Math.abs(bubble.y - bullet.y) < bubble.size + bullet.netHeight) {
+                    // 泡泡碰到电网
+                    createExplosion(bubble.x, bubble.y, 'electric');
+                    bubbleGame.bubbles.splice(j, 1);
+                    bubbleGame.score += 100;
+                    bubbleGame.totalScore += 100;
+                    saveTotalScore(bubbleGame.totalScore);
+                }
+            }
+            
+            // 电网不进行普通碰撞检测
+            continue;
         }
         
         // 检测与普通泡泡的碰撞
